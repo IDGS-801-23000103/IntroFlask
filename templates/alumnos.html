@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{%block content %}
+{% improt "_macros.html" as macros %}
+<form action="/alumnos" method="post">
+    {{macros.datos("nombre", "Ingresa nombre")}}
+    {{macros.datos("apaterno", "Ingresa apaterno")}}
+    {{macros.datos("edad", "Edad", "number")}}
+    {{macros.datos("correo", "correo", "email")}}
+    {{macros.datos("contraseña", "contrasela", "password")}}
+
+    <button class="btn btn-primary" value="Calcular">Calcular</button>
+<h1>alumnos</h1>
+{%endblock%}
