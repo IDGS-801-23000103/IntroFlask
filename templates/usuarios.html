@@ -1,5 +1,41 @@
 {% extends "layout.html" %}
+{% import "_macros.html" as macros %}
 
-{%block content %}
-<h1>usuarios</h1>
-{%endblock%}
+{% block content %}
+<form method="post">
+
+    {{ form.csrf_token }}
+
+    <div class="mb-3">
+        {{ macros.campoNuevo(form.matricula, class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ macros.campoNuevo(form.nombre, class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ macros.campoNuevo(form.apaterno, class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ macros.campoNuevo(form.amaterno, class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ macros.campoNuevo(form.correo, class="form-control") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+</form>
+
+<hr>
+
+<h4>Datos enviados</h4>
+<p>Matricula: {{ mat }}</p>
+<p>Nombre: {{ nom }}</p>
+<p>Apellido Paterno: {{ apa }}</p>
+<p>Apellido Materno: {{ ama }}</p>
+<p>Correo: {{ email }}</p>
+{% endblock %}
