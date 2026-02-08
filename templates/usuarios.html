@@ -1,41 +1,38 @@
 {% extends "layout.html" %}
-{% import "_macros.html" as macros %}
+{% from "macros.html" import render_field %}
 
 {% block content %}
-<form method="post">
+<div class="row justify-content-center">
+    <div class="col-md-6">
 
-    {{ form.csrf_token }}
+        <div class="card shadow">
+            <div class="card-header cinepolis-header text-white">
+                <h4 class="mb-0 text-center">Registro de Usuario</h4>
+            </div>
 
-    <div class="mb-3">
-        {{ macros.campoNuevo(form.matricula, class="form-control") }}
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.csrf_token }}
+
+                    {{ render_field(form.matricula) }}
+                    {{ render_field(form.nombre) }}
+                    {{ render_field(form.apaterno) }}
+                    {{ render_field(form.amaterno) }}
+                    {{ render_field(form.correo) }}
+
+                    <button class="btn btn-warning w-100 mt-2">
+                        Registrar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {% if mensaje %}
+        <div class="alert alert-success mt-3 text-center">
+            {{ mensaje }}
+        </div>
+        {% endif %}
+
     </div>
-
-    <div class="mb-3">
-        {{ macros.campoNuevo(form.nombre, class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-        {{ macros.campoNuevo(form.apaterno, class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-        {{ macros.campoNuevo(form.amaterno, class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-        {{ macros.campoNuevo(form.correo, class="form-control") }}
-    </div>
-
-    <button type="submit" class="btn btn-primary">Enviar</button>
-
-</form>
-
-<hr>
-
-<h4>Datos enviados</h4>
-<p>Matricula: {{ mat }}</p>
-<p>Nombre: {{ nom }}</p>
-<p>Apellido Paterno: {{ apa }}</p>
-<p>Apellido Materno: {{ ama }}</p>
-<p>Correo: {{ email }}</p>
+</div>
 {% endblock %}

@@ -5,11 +5,12 @@ from wtforms.validators import DataRequired, Email, Length, Regexp, NumberRange
 
 
 class UserForm(FlaskForm):
+
     matricula = IntegerField(
-        "Matricula",
+        "Matrícula",
         validators=[
             DataRequired(message="La matrícula es obligatoria"),
-            NumberRange(min=1, message="Ingrese una matrícula válida")
+            NumberRange(min=1, message="Matrícula no válida")
         ]
     )
 
@@ -17,34 +18,34 @@ class UserForm(FlaskForm):
         "Nombre",
         validators=[
             DataRequired(message="El nombre es obligatorio"),
-            Length(min=3, message="El nombre debe tener al menos 3 caracteres"),
+            Length(min=3, message="Mínimo 3 caracteres"),
             Regexp("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$",
-                message="El nombre solo debe contener letras")
+                   message="Solo letras")
         ]
     )
 
     apaterno = StringField(
         "Apellido Paterno",
         validators=[
-            DataRequired(message="El apellido paterno es obligatorio"),
+            DataRequired(message="Campo obligatorio"),
             Regexp("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$",
-                message="El apellido paterno solo debe contener letras")
+                   message="Solo letras")
         ]
     )
 
     amaterno = StringField(
         "Apellido Materno",
         validators=[
-            DataRequired(message="El apellido materno es obligatorio"),
+            DataRequired(message="Campo obligatorio"),
             Regexp("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$",
-                message="El apellido materno solo debe contener letras")
+                   message="Solo letras")
         ]
     )
 
     correo = EmailField(
-        "Correo",
+        "Correo Electrónico",
         validators=[
-            DataRequired(message="El correo es obligatorio"),
-            Email(message="Ingrese un correo electrónico válido")
+            DataRequired(message="Correo obligatorio"),
+            Email(message="Correo no válido")
         ]
     )

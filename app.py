@@ -1,98 +1,44 @@
 from flask import Flask, render_template, request
-from flask import Flask
-from flask_wtf.csrf import CSRFProtect
-from forms import UserForm
 
-import forms
+app = Flask(__name__)
 
-app=Flask(__name__)
-app.secret_key='clave secreta'
-
-csrf=CSRFProtect()
+PRECIO_BOLETO = 12000
 
 
-@app.route("/")
-def index():
-    titulo="Flask IDGS801"
-    lista="Melannie", "Alejandro", "Elena"
-    return render_template("index.html", titulo=titulo, lista=lista)
+@app.route("/", methods=["GET", "POST"])
+def cinepolis():
+    valor_pagar = ""
 
-@app.route("/alumnos")
-def alumnos():
-    return render_template("alumnos.html")
-
-@app.route("/usuarios", methods=["GET", "POST"])
-def usuarios():
-    mat = nom = apa = ama = email = mensaje = ""
-
-    form = forms.UserForm()
-
-    if form.validate_on_submit():
-        mat = form.matricula.data
-        nom = form.nombre.data
-        apa = form.apaterno.data
-        ama = form.amaterno.data
-        email = form.correo.data
-        mensaje = f"Bienvenido {nom}"
-
-    return render_template(
-        "usuarios.html",
-        form=form,
-        mat=mat,
-        nom=nom,
-        apa=apa,
-        ama=ama,
-        email=email,
-        mensaje=mensaje
-    )
-
-
-@app.route("/operasBas",methods=['GET', 'POST'])
-def operas1():
-    n1=0
-    n2=0
-    res=0
-    if request.method=='POST':
-        n1=request.form.get('n1')
-        n2=request.form.get('n2')
-        tem=float(n1)+float(n2)
-    return render_template("operasBas.html",n1=n1,n2=n2,res=res)
-
-@app.route("/resultado",methods=['GET', 'POST'])
-def resultado():
     if request.method == "POST":
-        n1=request.form.get('n1')
-        n2=request.form.get('n2')
-        tem=float(n1)+float(n2)
-    return f"La suma es: {tem}"
+        nombre = request.form.get("nombre")
+        compradores = int(request.form.get("compradores"))
+        boletos = int(request.form.get("boletos"))
+        cineco = request.form.get("cineco")
 
-
-@app.route("/hola")
-def hola():
-    return "Hola mundo"
-
-@app.route("/user/<string:user>")
-def user(user):
-    return f"Hello, {user}"
-
-@app.route("/default/")
-@app.route("/default/<string:parm>")
-def func(param="melannie"):
-    return f"<h1>¡Hola, {param}!</h1>"
-
-@app.route("/operas")
-def operas():
-    return '''
-        <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        </br>
-        <label for="name">apaterno:</label>
-        <input type="text" id="name" name="name" required>
-        </form>
         
-        '''
+        max_boletos = compradores * 7
+        if boletos > max_boletos:
+            valor_pagar = "Error: Máximo 7 boletos por persona"
+        else:
+            total = boletos * PRECIO_BOLETO
+            descuento = 0
 
-if __name__=='__main__':
-    csrf.init_app(app)
+            
+            if boletos >= 3 and boletos <= 5:
+                descuento = 0.10
+            elif boletos > 5:
+                descuento = 0.15
+
+            total -= total * descuento
+
+
+            if cineco == "si":
+                total -= total * 0.10
+
+            valor_pagar = f"$ {total:,.2f}"
+
+    return render_template("cinepolis.html", valor_pagar=valor_pagar)
+
+
+if __name__ == "__main__":
     app.run(debug=True)

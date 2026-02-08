@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 
-    {%block content %}
-    <h1>{{titulo}}</h1>
+{% block content %}
+<div class="text-center">
+    <h1 class="cinepolis-title">Bienvenido a Cinépolis</h1>
+    <p class="lead">{{ descripcion }}</p>
 
-    {% for i in lista %}
-        <li>{{i}}</li>
-    {%endfor%}
-    <h1>hola index</h1>
-
-    {%endblock%}
+    <a href="/usuarios" class="btn btn-warning btn-lg mt-3">
+        Ir al Registro
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinépolis</title>
+
+    <!-- CSS (TU RUTA REAL) -->
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='bootstrap/css/cinepolis.css') }}">
+</head>
+
+<body>
+
+<!--<div class="logo-cinepolis"></div> -->
+
+<div class="ventana">
+
+    <h2 class="titulo">Cinépolis</h2>
+
+    <form method="POST">
+
+        
+        <div class="seccion">
+            <h3>Entradas</h3>
+
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+
+            <label>Cantidad Compradores</label>
+            <input type="number" name="compradores" min="1" required>
+
+            <label>Tarjeta CINECO</label>
+            <div class="radio">
+                <input type="radio" name="cineco" value="si" required> Sí
+                <input type="radio" name="cineco" value="no"> No
+            </div>
+            <div class="aviso-cineco">
+    💳 <strong>AVISO:</strong>  
+    Si compras con la <strong>tarjeta CINECO</strong> obtendrás un  
+    <strong>10% de descuento adicional</strong> sobre el valor a pagar.
+</div>
+
+
+            <label>Cantidad de Boletos</label>
+            <input type="number" name="boletos" min="1" required>
+        </div>
+
+
+        <div class="seccion">
+            <h3>Salidas</h3>
+
+            <label>Valor a Pagar</label>
+            <input type="text" value="{{ valor_pagar }}" readonly>
+        </div>
+
+
+    <div class="acciones">
+    <button type="submit">Procesar</button>
+    <button type="button" onclick="limpiarFormulario()">Salir</button>
+</div>
+
+
+    </form>
+
+</div>
+
+</body>
+</html>
+<script>
+    function limpiarFormulario() {
+        window.location.href = "/";
+    }
+</script>
+
